@@ -329,7 +329,7 @@ sample(x = 1:10, size = 1)
 ```
 
 ```
-## [1] 1
+## [1] 9
 ```
 
 ```r
@@ -338,7 +338,7 @@ sample(1:10, 1)
 ```
 
 ```
-## [1] 8
+## [1] 2
 ```
 
 ---
@@ -359,6 +359,23 @@ args(sample)
 Pregunta, ¿qué valores tiene por defecto la función `round()`?
 
 **Buena práctica**: escribir nombre de argumentos (salvo quizás el primero).
+
+---
+## Algunas Funciones 
+
+| Función   | Significado                   | 
+|:----------|:------------------------------| 
+| `log`      | Logaritmo Nat.               | 
+| `exp`      | Exponencial                  | 
+| `min`      | Elem. mínimo                 | 
+| `max`      | Elem. máximo                 | 
+| `sum`      | Suma                         | 
+| `mean`     | Media                        | 
+| `median`   | Mediana                      | 
+| `var`      | Variaza                      | 
+| `sd`       | Dev. Est.                    | 
+| `quantile` | Cuantiles 0, 25, 50, 75, 100 | 
+| `cor`      | Correlación                  | 
 
 ---
 ## Definiendo funciones propias
@@ -393,7 +410,7 @@ a &lt;- gen2_1_100()
 ```
 
 ```
-## [1] 72 69
+## [1] 57 46
 ```
 
 ```r
@@ -401,7 +418,7 @@ a
 ```
 
 ```
-## [1] 141
+## [1] 103
 ```
 
 ---
@@ -428,11 +445,11 @@ gen2_1_100()
 ```
 
 ```
-## [1] 41 44
+## [1] 36  2
 ```
 
 ```
-## [1] 85
+## [1] 38
 ```
 
 ---
@@ -445,11 +462,11 @@ gen2_1_100(10)
 ```
 
 ```
-##  [1] 55 36 75 86 98 53 13  7 52 77
+##  [1] 93 20 75 46 59 23 63 44 64 97
 ```
 
 ```
-## [1] 552
+## [1] 584
 ```
 
 ---
@@ -664,6 +681,22 @@ a
 ```
 
 ---
+## Operaciones lógicas
+
+&lt;br&gt;
+&lt;br&gt;
+
+| Operador  | Significado       | 
+|:----------|:------------------| 
+| `==`      | Igual a           | 
+| `!=`      | Distinto de       | 
+| `&gt;`       | Mayor             | 
+| `&gt;=`      | Mayor o igual     | 
+| `&lt;`       | Menor             | 
+| `&lt;=`      | Menor o igual     | 
+| `%in%`    | Está en conjunto  |
+
+---
 ## Inciso: Atributos
 
 Son piezas de información que se pueden adjuntar a los objetos de R.
@@ -803,7 +836,7 @@ hora
 ```
 
 ```
-## [1] "2023-09-05 12:03:23 CEST"
+## [1] "2023-09-05 12:44:19 CEST"
 ```
 
 ```r
@@ -872,7 +905,7 @@ milista
 ##  [1]  1  2  3  4  5  6  7  8  9 10
 ## 
 ## [[3]]
-## [1] "2023-09-05 12:03:23 CEST"
+## [1] "2023-09-05 12:44:19 CEST"
 ```
 
 ---
@@ -924,31 +957,6 @@ class: center, middle, inverse
 
 # Selección y modificación de valores
 
----
-## Seleccionar valores 
-
-En un dataframe
-
-
-```r
-# Selección con números enteros
-df[1,2]
-```
-
-```
-## [1] "SI"
-```
-
-```r
-# Más de un elemento
-df[1:2, 2:3]
-```
-
-```
-##   fumador edad
-## 1      SI   64
-## 2      NO   32
-```
 
 ---
 ## Seleccionar valores 
@@ -986,6 +994,69 @@ df[1,c(TRUE, TRUE, FALSE)]
 ```
 ##   paciente fumador
 ## 1  MARIANO      SI
+```
+
+
+---
+## Seleccionar valores
+
+### Indexación por posición
+
+| Sintáxis    | Significado                   | 
+|:------------|:------------------------------| 
+| `x[3]`      | Tercer elemento               | 
+| `x[-3]`     | Todos menos terceros          | 
+| `x[2:4]`    | Elementos 2,3,4               | 
+| `x[-(2:4)]` | Todos menos 2,3,4             | 
+| `x[c(1,5)]` | Elementos 1 y 5               | 
+
+---
+## Seleccionar valores
+
+### Indexación por valor
+
+
+| Sintáxis             | Significado                         | 
+|:---------------------|:------------------------------------| 
+| `x[x==10]`           | Elementos de valor 10               | 
+| `x[x&lt;0]`             | Elementos menores a 0               | 
+| `x[x %in% c(1,2,5)]` | Elementos que sean o bien 1 o 2 o 5 | 
+
+
+---
+## Seleccionar valores
+
+### Indexación por nombre
+
+| Sintáxis             | Significado                         | 
+|:---------------------|:------------------------------------| 
+| `x["paciente1"]`     | Elementos con nombre paciente1      | 
+
+
+---
+## Seleccionar valores 
+
+En un dataframe
+
+
+```r
+# Selección con números enteros
+df[1,2]
+```
+
+```
+## [1] "SI"
+```
+
+```r
+# Más de un elemento
+df[1:2, 2:3]
+```
+
+```
+##   fumador edad
+## 1      SI   64
+## 2      NO   32
 ```
 
 ---

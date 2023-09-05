@@ -274,6 +274,23 @@ Pregunta, ¿qué valores tiene por defecto la función `round()`?
 **Buena práctica**: escribir nombre de argumentos (salvo quizás el primero).
 
 ---
+## Algunas Funciones 
+
+| Función   | Significado                   | 
+|:----------|:------------------------------| 
+| `log`      | Logaritmo Nat.               | 
+| `exp`      | Exponencial                  | 
+| `min`      | Elem. mínimo                 | 
+| `max`      | Elem. máximo                 | 
+| `sum`      | Suma                         | 
+| `mean`     | Media                        | 
+| `median`   | Mediana                      | 
+| `var`      | Variaza                      | 
+| `sd`       | Dev. Est.                    | 
+| `quantile` | Cuantiles 0, 25, 50, 75, 100 | 
+| `cor`      | Correlación                  | 
+
+---
 ## Definiendo funciones propias
 
 * Permiten definir operaciones de uso recurrente (no implementadas en R).
@@ -498,6 +515,22 @@ a
 ```
 
 ---
+## Operaciones lógicas
+
+<br>
+<br>
+
+| Operador  | Significado       | 
+|:----------|:------------------| 
+| `==`      | Igual a           | 
+| `!=`      | Distinto de       | 
+| `>`       | Mayor             | 
+| `>=`      | Mayor o igual     | 
+| `<`       | Menor             | 
+| `<=`      | Menor o igual     | 
+| `%in%`    | Está en conjunto  |
+
+---
 ## Inciso: Atributos
 
 Son piezas de información que se pueden adjuntar a los objetos de R.
@@ -629,18 +662,6 @@ class: center, middle, inverse
 
 # Selección y modificación de valores
 
----
-## Seleccionar valores 
-
-En un dataframe
-
-```{r}
-# Selección con números enteros
-df[1,2]
-
-# Más de un elemento
-df[1:2, 2:3]
-```
 
 ---
 ## Seleccionar valores 
@@ -658,6 +679,56 @@ df[,-2]
 df[1,c(TRUE, TRUE, FALSE)]
 
 
+```
+
+
+---
+## Seleccionar valores
+
+### Indexación por posición
+
+| Sintáxis    | Significado                   | 
+|:------------|:------------------------------| 
+| `x[3]`      | Tercer elemento               | 
+| `x[-3]`     | Todos menos terceros          | 
+| `x[2:4]`    | Elementos 2,3,4               | 
+| `x[-(2:4)]` | Todos menos 2,3,4             | 
+| `x[c(1,5)]` | Elementos 1 y 5               | 
+
+---
+## Seleccionar valores
+
+### Indexación por valor
+
+
+| Sintáxis             | Significado                         | 
+|:---------------------|:------------------------------------| 
+| `x[x==10]`           | Elementos de valor 10               | 
+| `x[x<0]`             | Elementos menores a 0               | 
+| `x[x %in% c(1,2,5)]` | Elementos que sean o bien 1 o 2 o 5 | 
+
+
+---
+## Seleccionar valores
+
+### Indexación por nombre
+
+| Sintáxis             | Significado                         | 
+|:---------------------|:------------------------------------| 
+| `x["paciente1"]`     | Elementos con nombre paciente1      | 
+
+
+---
+## Seleccionar valores 
+
+En un dataframe
+
+```{r}
+# Selección con números enteros
+df[1,2]
+
+# Más de un elemento
+df[1:2, 2:3]
 ```
 
 ---
