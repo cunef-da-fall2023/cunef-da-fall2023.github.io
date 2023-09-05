@@ -664,25 +664,6 @@ class: center, middle, inverse
 
 
 ---
-## Seleccionar valores 
-
-En un dataframe
-
-```{r}
-# Selección con enteros negativos
-df[-c(1,2),1:3]
-
-# Selección con espacios
-df[,-2]
-
-# Selección con variables lógicas
-df[1,c(TRUE, TRUE, FALSE)]
-
-
-```
-
-
----
 ## Seleccionar valores
 
 ### Indexación por posición
@@ -729,6 +710,24 @@ df[1,2]
 
 # Más de un elemento
 df[1:2, 2:3]
+```
+
+---
+## Seleccionar valores 
+
+En un dataframe
+
+```{r}
+# Selección con enteros negativos
+df[-c(1,2),1:3]
+
+# Selección con espacios
+df[,-2]
+
+# Selección con variables lógicas
+df[1,c(TRUE, TRUE, FALSE)]
+
+
 ```
 
 ---
