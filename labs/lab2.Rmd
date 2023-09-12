@@ -36,7 +36,7 @@ El color debe reflejar el continente.
 
 ## Ejercicio 2
 
-La contaminación debida al consume de plástico es un problema global que afecta negativamente a la salud de diversos ecosistemas.
+La contaminación debida al consumo de plástico es un problema global que afecta negativamente a la salud de diversos ecosistemas.
 [Our World in Data](https://ourworldindata.org/plastic-pollution) contiene multitud de datos acerca de la evolución del consumo de plástico tanto a nivel global, como de país. Para este ejercicio nos centramos en los datos de 2010.
 
 

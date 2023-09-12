@@ -1,5 +1,5 @@
 ---
-title: "Lab 02 - Visualización"
+title: "Lab 03 - Transformación"
 output:
   html_document:
     css: ./ds_labs.css
@@ -22,216 +22,263 @@ knitr::opts_chunk$set(fig.width=12, fig.height=8)
 ```
 
 
-## Ejercicio 1
-
-Utilizando los datos de la librería `gapminder`:
-
-* Filtra las obserevaciones correspondientes a los años 1957, 1967, 1977, 1987, 1997, 2007
-
-* Representa la relación entre PIB per cápita y esperanza de vida por continentes y por años
-en diferentes gráficas usando **faceting**. El tamaño de los puntos ha de ser proporcional a la población.
-El color debe reflejar el continente. 
-
-* ¿Qué conlusiones extraes?
-
-### Solución
-
-Cargamos los paquetes necesarios
-```{r}
-library(gapminder)
-library(tidyverse)
-unique(gapminder$year)
-```
-
-Filtramos las observaciones de los años 1957, 1967, 1977, 1987, 1997, 2007
-```{r}
-years <- c(1957, 1967, 1977, 1987, 1997, 2007)
-gapminder_filter <- gapminder %>% filter(year %in% years)
-```
-
-Representamos gráficamente
-```{r}
-ggplot(data = gapminder_filter, aes(x = gdpPercap, y = lifeExp,
-                                    size=pop, color=continent)) + 
-  geom_point() +
-  labs(title = "PIB per Cápita vs Esperanza de Vida",
-       subtitle = "Por continente y año",
-       x = "PIB per Cápita ($)", y =  "Esperanza de vida (años)") +
-  scale_x_log10() +
-  facet_grid(continent ~ year, scales = "free_x")
-```
-
-## Ejercicio 2
-
-La contaminación debida al consume de plástico es un problema global que afecta negativamente a la salud de diversos ecosistemas.
-[Our World in Data](https://ourworldindata.org/plastic-pollution) contiene multitud de datos acerca de la evolución del consumo de plástico tanto a nivel global, como de país. Para este ejercicio nos centramos en los datos de 2010.
-
+En este laboratorio trabajaremos con datos procedentes de una encuesta sobre los hábitos de los fumadores en el Reino Unido. Los datos poceden del National STEM Centre, Large Datasets from stats4schools, [https://www.stem.org.uk/resources/elibrary/resource/28452/large-datasets-stats4schools](https://www.stem.org.uk/resources/elibrary/resource/28452/large-datasets-stats4schools).
 
 Los datos se encuentran en la carpeta data del repositorio. Puedes cargarlos utilizando
 
 ```{r load-data, message=FALSE, eval=TRUE}
 library(tidyverse)
-plastic <- read_csv("data/plastic-waste.csv")
+fumar <- read_csv("data/smoking.csv")
 ```
+La variables recogidas son (entre paréntesis aparecen los niveles que toman):
 
-Las variables son las siguientes
+* `gender`: Género
 
-- `code`: Código de país (3 letras)
-- `entity`: Nombre completo del país
-- `continent`: Nombre del continente
-- `year`: Año
-- `gdp_per_cap`: PIB per cápita (2011) en dólares internacionales
-- `plastic_waste_per_cap`: Cantidad de residuos per capita de plástico en kg/día
-- `mismanaged_plastic_waste_per_cap`: Cantidad de residuos de plástico mal gestionados en kg/día
-- `mismanaged_plastic_waste`: Toneladas de residuos de plástico mal gestionados
-- `coastal_pop`: Número de individuos que viven en o cerca de la cosa
-- `total_pop`: Población total
+* `age`: Edad
 
-Visualiza la distribución de la cantidad de residuos de plástico per cápita (en 2010).
+*  `marital_status`: Estado civil (Divorced, Married, Separated, Single and Widowed)
 
-¿Existe algún valor atípico? Si es así, determina qué países son atípicos. Trata de mostrar si son o no datos erróneos (investigando en internet).
+* `highest_qualification`: Nivel más alto de educación (A Levels, Degree, GCSE/CSE, GCSE/O Level, Higher/Sub Degree, No Qualification, ONC/BTEC y Other/Sub Degree)
 
-Nota: Para el resto de ejercicios, filtra los datos atípicos si los hubiera.
+* `nationality`: Nacionalidad (British, English, Irish, Scottish, Welsh, Other, Refused y Unknown)
+
+* `ethnicity` : Etnia  (Asian, Black, Chinese, Mixed, White y Refused Unknown)
+
+* `gross_income`: Salario bruto (Under 2,600, 2,600 to 5,200, 5,200 to 10,400, 10,400 to 15,600, 15,600 to 20,800, 20,800 to 28,600, 28,600 to 36,400, Above 36,400, Refused y Unknown)
+
+* `region`: Region (London, Midlands & East Anglia, Scotland, South East, South West, The North y Wales)
+
+* `smoke` : Fumador (No y Yes)
+
+* `amt_weekends`: Número de cigarros diarios en fin de semana
+
+* `amt_weekdays`:  Número de cigarros diarios entre semana
+
+* `type`: Tipo de cigarrilos (Packets, Hand-Rolled, Both/Mainly Packets y Both/Mainly Hand-Rolled)
+
+
+
+## Ejercicio 1
+
+¿Cuántas observaciones hay en el dataset para cada género? ¿Qué proporción de mujeres son fumadoras? ¿Y de hombres?
 
 ### Solución
-```{r, eval=TRUE}
-ggplot(data = plastic, aes(x = plastic_waste_per_cap)) +
-  geom_histogram(binwidth = 0.01, fill="red") 
+
+```{r}
+fumar %>% group_by(gender, smoke) %>% summarise(n = n()) %>% 
+  mutate(proportion = n/sum(n)) 
 ```
+El 24.2% de las mujeres son fumadoras.
 
+## Ejercicio 2
 
-```{r plastic_waste_per_cap-max, eval=TRUE}
-plastic %>%
-  filter(plastic_waste_per_cap > 3.5)  %>%
-  select(entity)
+Selecciona la variable `amt_weekends`, ordenala de forma decreciente y muestra los primeros 10 valores.
+Haz lo mismo con  `amt_weekdays`, ¿qué observas?
 
-plastic <- plastic %>%
-  filter(plastic_waste_per_cap < 3.5)
+### Solución
 
+```{r}
+fumar %>% select(amt_weekends) %>%
+  arrange(desc(amt_weekends)) %>% slice(1:10)
+```
+```{r}
+fumar %>% select(amt_weekdays) %>%
+  arrange(desc(amt_weekdays)) %>% slice(1:10)
 ```
 
 
 ## Ejercicio 3
 
-Visualiza la distribución de la cantidad de residuos de plástico per capita por continente, usando distintos histogramas para cada continente.
+¿Qué valores únicos presenta la variable `gross_income`?
+
+Sustituye los valores Unknown con `NA` y vuelve a calcular los valores únicos de la variable.
 
 ### Solución
 
-```{r, eval=TRUE}
-ggplot(data = plastic, aes(x = plastic_waste_per_cap, fill = continent)) +
-  geom_histogram(binwidth = 0.05) + facet_wrap(continent~.)
+```{r}
+fumar %>% distinct(gross_income)
+#
+fumar2 <- fumar %>% mutate(gross_income = ifelse(gross_income == "Unknown", NA, gross_income))
+
+fumar2 %>% distinct(gross_income)
 ```
 
-## Ejercicio 4
 
-Repite la gráfica anterior usando densidad, incluyendo todos los continentes en la misma gráfica indicándolos con distintos colores.
+## Ejercicio 4 
+
+Muestra las 10 últimas filas del dataset
 
 ### Solución
 
-```{r plastic_waste_per_cap-dens-color, eval = TRUE}
-ggplot(data = plastic, 
-       mapping = aes(x = plastic_waste_per_cap, 
-                     color = continent)) +
-  geom_density()
+```{r}
+fumar %>% slice_tail(n = 10)
+```
+
+```{r}
+fumar %>% slice( (nrow(fumar) - 9) : nrow(fumar))
 ```
 
 ## Ejercicio 5
 
-Mejora la gráfica anterior pintando cada curva de un color y añadiendo transparencia.
+¿Cuál es la media de cigarrillos diarios entre semana que fuman los fumadores menores de 30? ¿Y los fines de semana? 
+**Nota**: Si observas `NA` determina  el posible origen de esos valores ausentes y su tratamiento,
 
 ### Solución
 
-```{r plastic_waste_per_cap-dens-color-fill-alpha, eval = TRUE}
-ggplot(plastic, 
-       aes(x = plastic_waste_per_cap, 
-                     color = continent, 
-                     fill = continent)) +
-  geom_density(alpha = 0.3)
+```{r}
+fumar %>% filter(age<30, smoke=="Yes") %>%  summarise(mean = mean(amt_weekends))
 ```
+
+
+```{r}
+fumar %>% filter(age<30, smoke == "Yes") %>%   summarise(mean_we = mean(amt_weekends), mean_wd = mean(amt_weekdays))
+```
+
 
 ## Ejercicio 6
 
-Elabora una visualización alternativa a la anterior que permita comparar la distribución de cantidad de residuos de plástico per cápita de diferentes continentes.
+Calcula media, mediana, y desviación estándar de cigarrillos/dia en fin de semana y entre semana por grupos de edad menor o igual a 20, 20-30, ..., >90. 
+Resume las conclusiones de los resultados observados.
+
+*Nota*: Crea una nueva variable llamada `decada` utilizando la función `case_when`.
+Los niveles de esta variable han de ser
+`"<=20","20-30","30-40", "40-50", "50-60", "60-70", "70-80", "80-90", ">90"`.
+
 
 ### Solución
 
-```{r plastic_waste_per_cap-box, eval = TRUE}
-ggplot(data = plastic, 
-       mapping = aes(x = continent, 
-                     y = plastic_waste_per_cap)) +
-  geom_boxplot()
+```{r}
+fumar_new <- fumar %>% mutate(decada=case_when(age<=20 ~"<=20",
+                    age>20 & age<=30 ~ "20-30",
+                    age>30 & age<=40 ~ "30-40",
+                    age>40 & age<=50 ~ "40-50",
+                    age>50 & age<=60 ~ "50-60",
+                    age>60 & age<=70 ~ "60-70",
+                    age>70 & age<=80 ~ "70-80",
+                    age>80 & age<=90 ~ "80-90",
+                    TRUE ~ ">90"))
+
+fumar_new %>% filter(smoke == "Yes") %>% 
+  group_by(decada) %>%
+  summarise(mean_we = mean(amt_weekends), 
+            mean_wd = mean(amt_weekdays),
+            median_we = median(amt_weekends),
+            median_wd = median(amt_weekdays),
+            sd_we = sd(amt_weekends),
+            sd_wd = sd(amt_weekdays) )
 ```
+
 
 ## Ejercicio 7
 
-Investiga qué son las [gráficas violín](http://ggplot2.tidyverse.org/reference/geom_violin.html).
-Construye la gráfica de violín de los datos anteriores. ¿Qué revelan estas gráficas que un boxplot no revela?
-
-¿Observas algún patrón que distinga la distribución de la cantidad de residuos de plástico de continentes desarrolladas y en vías de desarrollo?
+Ordena las distintas etnias en orden decreciente de proporción de fumadores en la muestra. Excluye aquellas observaciones con etnia desconocida o no declarada.
 
 ### Solución
+
 ```{r}
-ggplot(data = plastic, 
-       mapping = aes(x = continent, 
-                     y = plastic_waste_per_cap,
-                     color = continent,
-                     fill = continent)) +
-  geom_violin()
+fumar %>% filter(! (ethnicity %in% c("Unknown", "Refused")) ) %>%
+  group_by(ethnicity, smoke) %>% 
+  summarize(n = n()) %>%
+  mutate(prop_smokers = n/sum(n)) %>%
+  filter(smoke == "Yes") %>%
+  arrange(desc(prop_smokers))
 ```
-En África, América Latina y Asia hay gran cantidad de países con pocos residuos y pocos con muchos residuos, mientras que en Europa, norteamérica y Oceanía la distribución es más homogénea.
 
 
 ## Ejercicio 8
 
-Visualiza la relación entre cantidad de residuos de plástico per cápita y PIB per cápita. Pinta cada continente con un color y añade un **único smoothing** que muestre la tendencia global. Además, usa la escala de colores viridis (investiga en internet cómo utilizarla).
-¿Cómo describirías esta relación? 
+¿Qué tipos de tabaco son más populares en las distintas franjas de salario bruto? ¿Y en las distintas franjas de edad?
+
+*Nota*: utiliza la variable decada creada anteriormente
 
 ### Solución
 
 ```{r}
-ggplot(data=plastic, mapping = aes(x = gdp_per_cap, 
-                     y = plastic_waste_per_cap) ) +
-  geom_point(aes(color = continent)) + geom_smooth() + scale_color_viridis_d()
+fumar %>% filter(smoke == "Yes") %>% group_by(gross_income, type) %>%
+  summarise(n = n()) %>%
+  mutate(prop_type = n/sum(n))
 ```
 
+
+```{r}
+fumar_new %>% filter(smoke == "Yes") %>% group_by(decada, type) %>%
+  summarise(n = n()) %>%
+  mutate(prop_type = n/sum(n))
+```
 
 ## Ejercicio 9
 
-Repite la gráfica anterior pero únicamente incluyendo los datos de Europa (obviamente sin utilizar colores).
-¿Qué tendencia observas? ¿Qué países consumen menos plástico de lo implicado por esta tendencia?
+¿Cuál es la diferencia entre estos dos códigos?
+
+```{r, eval=F}
+fumar %>% count(gender, smoke) %>% mutate(prop=n/sum(n))
+```
+
+```{r, eval=F}
+fumar %>% group_by(gender, smoke) %>% summarise(n=n()) %>%
+  mutate(prop=n/sum(n))
+```
 
 ### Solución
 
-```{r}
-plastic_europa <- plastic[plastic$continent == "Europe",]
-plastic %>% filter(continent == "Europe") %>%
-  ggplot(mapping = aes(x = gdp_per_cap, 
-                     y = plastic_waste_per_cap) ) +
-  geom_point()  + geom_smooth() 
-```
-
-```{r}
-plastic %>% 
-  filter(continent == "Europe")  %>% 
-  filter(plastic_waste_per_cap < 0.1 & gdp_per_cap > 40000) 
-
-
-plastic_europa[plastic_europa$gdp_per_cap > 40000 & plastic_europa$plastic_waste_per_cap < 0.1, "entity"]
-```
+En el primero no se agrupa y por tanto el porcentaje mostrado es sobre el total.
+En el segundo, al hacer `group_by`, el porcentaje mostrado es sobre los individuos 
+de cada grupo.
 
 ## Ejercicio 10
 
-Visualiz la relación entre los residuos de plástico per cápita y los residuos mal gestionados per cápita.
-Pinta cada continente de un color. ¿Cambia la asociación de estas dos variables entre continentes?
+¿Entre la gente que no está casada, cuántos cigarros/día entre semana se fuman de media por nivel de estudios?
 
 
 ### Solución
 
+
 ```{r}
-ggplot(plastic, aes(x = plastic_waste_per_cap,
-                    y = mismanaged_plastic_waste_per_cap, color=continent)) +
-         geom_point()
+fumar %>% filter(smoke == "Yes", marital_status != "Married") %>% 
+  group_by(highest_qualification) %>%
+  summarise(mean = mean(amt_weekdays))
 ```
 
+
+## Ejercicio 11
+
+En numerosas ocasiones, ante la presencia de valores ausentes, es útil substituírlos
+por un valor. A este proceso se le conoce como imputación.
+Una de las técnicas más comunes de imputación de variables categóricas, consiste
+en substituír los valores ausentes por el valor más probable en cierto 
+segmento de la población (la moda).
+
+Por ejemplo, podemos sustituír los valores desconocidos o no declarados de la variable `ethnicity`
+por la etnia más frecuente en los datos, y asumir que el porcentaje de error será pequeño.
+Una estrategia quizás más inteligente es sustituír los valores desconocidos o no declarados de la variable `ethnicity` por la etnia más prevalente en la nación correspondiente. En este ejercicio,
+has de realizar esto último. Para ello, ayudate de la siguiente función
+para el cálculo de la moda.
+
+```{r}
+calc_mode <- function(x){
+  
+  x <- x[!x %in% c("Refused", "Unkown")]
+  distinct_values <- unique(x)
+  distinct_tabulate <- tabulate(match(x, distinct_values))
+  distinct_values[which.max(distinct_tabulate)]
+  
+}
+```
+
+
+*Nota*: Excluye las observaciones con nacionalidad no conocida o no declarada.
+¿Qué sucede si las incluyes?
+
+### Solución
+
+```{r}
+fumar %>% filter(!nationality %in%  c("Unknown", "Refused")) %>% 
+  group_by(nationality) %>% 
+  mutate(ethnicity_nona = if_else(ethnicity %in% c("Unknown", "Refused"), 
+                         calc_mode(ethnicity), 
+                         ethnicity))  %>% 
+  filter(ethnicity %in% c("Unknown", "Refused")) %>%
+  select(nationality, ethnicity, ethnicity_nona)
+```
 
 
