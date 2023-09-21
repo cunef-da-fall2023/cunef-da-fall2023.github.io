@@ -43,10 +43,11 @@ Bienvenido al sitio web de la asignatura de **Análisis de Datos** del primer cu
 - 2.1: Visualización de datos
   - [Diapositivas](./tema2/tema2-1.html)
   
-<!--  
+
 - 2.2: Transformación de datos
   - [Diapositivas](./tema2/tema2-2.html)
 
+<!--  
 - 2.3: Análisis Exploratorio de datos
   - [Diapositivas](./tema2/tema2-3.html)
   

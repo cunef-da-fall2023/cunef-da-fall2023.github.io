@@ -4,7 +4,7 @@
     <title>Tema 2.2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Roi Naveiro" />
-    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link rel="stylesheet" href="ds_slides.css" type="text/css" />
   </head>
   <body>
@@ -938,19 +938,20 @@ gapminder %&gt;%
 
 ```
 ## # A tibble: 142 × 7
-##    country  continent  year lifeExp    pop gdpPercap     gdp
-##    &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-##  1 United … Americas   2007    78.2 3.01e8    42952. 1.29e13
-##  2 China    Asia       2007    73.0 1.32e9     4959. 6.54e12
-##  3 Japan    Asia       2007    82.6 1.27e8    31656. 4.04e12
-##  4 India    Asia       2007    64.7 1.11e9     2452. 2.72e12
-##  5 Germany  Europe     2007    79.4 8.24e7    32170. 2.65e12
-##  6 United … Europe     2007    79.4 6.08e7    33203. 2.02e12
-##  7 France   Europe     2007    80.7 6.11e7    30470. 1.86e12
-##  8 Brazil   Americas   2007    72.4 1.90e8     9066. 1.72e12
-##  9 Italy    Europe     2007    80.5 5.81e7    28570. 1.66e12
-## 10 Mexico   Americas   2007    76.2 1.09e8    11978. 1.30e12
-## # … with 132 more rows
+##    country      conti…¹  year lifeExp    pop gdpPe…²     gdp
+##    &lt;fct&gt;        &lt;fct&gt;   &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 United Stat… Americ…  2007    78.2 3.01e8  42952. 1.29e13
+##  2 China        Asia     2007    73.0 1.32e9   4959. 6.54e12
+##  3 Japan        Asia     2007    82.6 1.27e8  31656. 4.04e12
+##  4 India        Asia     2007    64.7 1.11e9   2452. 2.72e12
+##  5 Germany      Europe   2007    79.4 8.24e7  32170. 2.65e12
+##  6 United King… Europe   2007    79.4 6.08e7  33203. 2.02e12
+##  7 France       Europe   2007    80.7 6.11e7  30470. 1.86e12
+##  8 Brazil       Americ…  2007    72.4 1.90e8   9066. 1.72e12
+##  9 Italy        Europe   2007    80.5 5.81e7  28570. 1.66e12
+## 10 Mexico       Americ…  2007    76.2 1.09e8  11978. 1.30e12
+## # … with 132 more rows, and abbreviated variable names
+## #   ¹​continent, ²​gdpPercap
 ```
 
 **NOTA 1**: se puede definir más de una variable
