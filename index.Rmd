@@ -79,11 +79,12 @@ Bienvenido al sitio web de la asignatura de **Análisis de Datos** del primer cu
 ### Lab 02 - Visualización 
   - [Ejercicios](./labs/lab2.html)
 
-<!--    
 
 ### Lab 03 - Transformación
   - [Ejercicios](./labs/lab3.html)
-  
+ 
+<!--  
+
 ### Lab 04 - Importación
   - [Ejercicios](./labs/lab4.html)
   
