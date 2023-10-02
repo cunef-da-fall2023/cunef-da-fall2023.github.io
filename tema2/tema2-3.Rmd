@@ -176,7 +176,7 @@ ggplot(data=iris, aes(x=Petal.Length)) +
 ---
 ## Ejemplo: longitud de pétalo
 
-Los *clusters* de valores similares sugieren que existen subgrupos en los datos. Para entenderlos, conviene que preguntarse
+Los *clusters* de valores similares sugieren que existen subgrupos en los datos. Para entenderlos, conviene preguntarse
 
 * ¿Qué tienen en común las observaciones de cada subgrupo?
 
@@ -188,7 +188,7 @@ Los *clusters* de valores similares sugieren que existen subgrupos en los datos.
 
 * Existe un grupo de flores con pétalos cortos (<2cm) y otro con pétalos largos (>2cm)
 
-* ¿Explica la variable especia esta separación?
+* ¿Explica la variable especie esta separación?
 
 ---
 ## Variación: variable contínua

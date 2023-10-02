@@ -57,7 +57,6 @@ La variables recogidas son (entre paréntesis aparecen los niveles que toman):
 * `type`: Tipo de cigarrilos (Packets, Hand-Rolled, Both/Mainly Packets y Both/Mainly Hand-Rolled)
 
 
-
 ## Ejercicio 1
 
 ¿Cuántas observaciones hay en el dataset para cada género? ¿Qué proporción de mujeres son fumadoras? ¿Y de hombres?
@@ -81,6 +80,7 @@ Haz lo mismo con  `amt_weekdays`, ¿qué observas?
 fumar %>% select(amt_weekends) %>%
   arrange(desc(amt_weekends)) %>% slice(1:10)
 ```
+
 ```{r}
 fumar %>% select(amt_weekdays) %>%
   arrange(desc(amt_weekdays)) %>% slice(1:10)
