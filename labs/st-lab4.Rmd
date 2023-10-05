@@ -1,29 +1,12 @@
 ---
-title: "Lab 04 - Importación de datos"
-output:
-  html_document:
-    css: ./ds_labs.css
-    toc: yes
-    toc_float: yes
-    fig_caption: no
-    seal : False
-    includes:
-      after_body: insert-logo.html
-  pdf_document:
-    toc: yes
+title: "Lab 04 - Importación"
+author: "Tu Nombre Aquí"
+date: "2023-09-05"
+output: html_document
 ---
 
-
-<div class="title-logo"></div>
-
-```{r packages_setup, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = T, warning = F, message = F)
-knitr::opts_chunk$set(fig.width=8, fig.height=6) 
-```
-
-
-```{r}
-library(tidyverse)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Ejercicio 1

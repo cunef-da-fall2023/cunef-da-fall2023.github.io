@@ -24,6 +24,7 @@ knitr::opts_chunk$set(fig.width=8, fig.height=6)
 
 ```{r}
 library(tidyverse)
+library(viridis)
 ```
 
 ## Ejercicio 1
@@ -34,7 +35,7 @@ un amigo/a. Incluye una línea de metadatos al principio con un comentario que d
 Por ejemplo:
 
 
-```{r}
+```{r, eval=TRUE}
 datos <- "# Datos de Ana y Pedro
 nombre,edad,genero,fuma
 Pedro,29,hombre,no
@@ -45,6 +46,16 @@ Ana,26,mujer,si"
 Lee los datos en un tibble. A continuación, guárdalos en formato csv dentro de una carpeta que se llama `data`.
 Una vez guardados, vuelve a leerlos (esta vez desde el fichero).
 Finalmente, guárdalos de nuevo en formato excel.
+
+```{r}
+data <- read_csv(datos, comment = "#")
+write_csv(data, "data/amigos.csv")
+```
+
+```{r}
+data <- read_csv("data/amigos.csv")
+data
+```
 
 
 
@@ -58,6 +69,21 @@ Cárgalos en R y haz lo siguiente:
 * Representa gráficamente la evolución del IPC Mediano desde el año 2000.
 
 * ¿En qué fecha se alcanzó el máximo IPC Mediano? ¿Y el mínimo? 
+
+
+```{r}
+data_url <- "https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1318&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=MEDCPIM158SFRBCLE&scale=left&cosd=1983-01-01&coed=2023-08-01&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=2&ost=-99999&oet=99999&mma=0&fml=a&fq=Monthly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2023-10-05&revision_date=2023-10-05&nd=1983-01-01"
+download.file(data_url, destfile = "data/ipc.csv")
+ipc <- read_csv("data/ipc.csv")
+```
+
+```{r}
+ipc %>% filter(DATE >= "2000-01-01") %>% ggplot(aes(x=DATE, y=MEDCPIM158SFRBCLE)) + geom_line() + theme_minimal()
+```
+```{r}
+ipc %>% arrange(desc(MEDCPIM158SFRBCLE)) %>% slice(1)
+ipc %>% arrange(MEDCPIM158SFRBCLE) %>% slice(1)
+```
 
 
 ## Ejercicio 3
@@ -76,11 +102,28 @@ La gráfica es esta:
 [https://ourworldindata.org/grapher/natural-gas-prices](https://ourworldindata.org/grapher/natural-gas-prices).
 
 
+### Solución
+
+
+```{r}
+gp <- read_csv("data/natural-gas-prices.csv")
+```
+
+```{r}
+ggplot(gp, aes(x=Year, y=`Gas - Prices`, color=Entity)) + 
+  geom_line() + geom_point(size=0.4) + theme_bw() + 
+  labs(title="Natural gas prices", 
+       subtitle="Natural gas prices, measured in current US dollars per cubic meter.") + 
+  scale_color_viridis_d()
+  
+```
 
 ## Ejercicio 4
 
 Busca en FRED algún dato de tu interés. Descárgalo en **excel**, impórtalo en R,
 construye una gráfica y extrae alguna conclusión.
+
+
 
 ## Ejercicio 5
 
@@ -94,6 +137,20 @@ d4 <- c("August 19 (2015)", "July 1 (2015)")
 d5 <- "12/30/14" # Dec 30, 2014
 t1 <- "1705"
 t2 <- "11:15:10.12 PM"
+```
+
+```{r}
+# Parsing dates
+parsed_d1 <- parse_date(d1, format = "%B %d, %Y")
+parsed_d2 <- parse_date(d2, format = "%Y-%b-%d")
+parsed_d3 <- parse_date(d3, format = "%d-%b-%Y")
+parsed_d4 <- parse_date(d4, format = "%B %d (%Y)")
+parsed_d5 <- parse_date(d5, format = "%m/%d/%y")
+
+# Parsing times
+parsed_t1 <- parse_time(t1, format = "%H%M")
+parsed_t2 <- parse_time(t2, format = "%I:%M:%OS %p")
+
 ```
 
 
@@ -110,5 +167,24 @@ Elabora un código que haga lo siguiente:
 * Si la tasa de desempleo más reciente es inferior a 10 % imprima el mensaje
 `"La tasa de desempleo ha bajado del 10%"`, de lo contrario, se imprimirá
 `"La tasa de desempleo se mantiente por encima del 10%"`
+
+
+```{r, eval=FALSE}
+data_url <- "https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=off&txtcolor=%23444444&ts=12&tts=12&width=1318&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=LRUN74TTESQ156S&scale=left&cosd=1999-01-01&coed=2023-01-01&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=2&ost=-99999&oet=99999&mma=0&fml=a&fq=Quarterly&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2023-10-05&revision_date=2023-10-05&nd=1999-01-01"
+
+if(!dir.exists("datos_paro")){
+ dir.create("datos_paro") 
+}
+download.file(data_url, "datos_paro/paro_esp.csv")
+paro <- read_csv("datos_paro/paro_esp.csv")
+paro <- paro %>% arrange(desc(DATE)) %>% slice(1) %>% select(LRUN74TTESQ156S)
+
+if(paro < 10){
+  print("La tasa de desempleo ha bajado del 10%")
+} else{
+  print("La tasa de desempleo se mantiente por encima del 10%")
+}
+```
+
 
 
