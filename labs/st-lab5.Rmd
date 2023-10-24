@@ -1,32 +1,12 @@
 ---
 title: "Lab 05 - Data Wrangling"
-output:
-  html_document:
-    css: ./ds_labs.css
-    toc: yes
-    toc_float: yes
-    fig_caption: no
-    seal : False
-    includes:
-      after_body: insert-logo.html
-  pdf_document:
-    toc: yes
+author: "Tu Nombre Aquí"
+output: html_document
 ---
 
-
-<div class="title-logo"></div>
-
-```{r packages_setup, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = T, warning = F, message = F)
-knitr::opts_chunk$set(fig.width=8, fig.height=6) 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
-```{r}
-library(tidyverse)
-library(nycflights13)
-```
-
 
 En 2017, la plataforma Kaggle realizó una encuesta en toda la industria para establecer una visión integral del estado de la ciencia de datos y el aprendizaje automático. La encuesta recibió más de 16.000 respuestas y arrojó luz acerca de quién está trabajando con datos, qué está sucediendo en la vanguardia del aprendizaje automático en todos los sectores industriales y cómo los nuevos científicos de datos pueden entrar mejor en este campo.
 
@@ -153,9 +133,4 @@ ggplot(data, aes(lon, lat)) +
 `airports`.
 
 ### Solución
-
-
-
-
-
 
