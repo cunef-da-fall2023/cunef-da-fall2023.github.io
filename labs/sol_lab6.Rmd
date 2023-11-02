@@ -50,6 +50,18 @@ y `sched_arr_time` contengan las fechas exactas a las que se refieren en formato
 
 ### Solución
 
+```{r}
+flights_dt <- flights %>% mutate(dep_time = make_datetime(year, month, day, 
+                                               dep_time %/% 100, dep_time %% 100),
+                   arr_time = make_datetime(year, month, day, 
+                                               arr_time %/% 100, arr_time %% 100),
+                   sched_dep_time = make_datetime(year, month, day, 
+                                               sched_dep_time %/% 100, sched_dep_time %% 100),
+                   sched_arr_time = make_datetime(year, month, day, 
+                                               sched_arr_time %/% 100, sched_arr_time %% 100)
+                   )
+```
+
 
 ## Ejercicio 2
 
@@ -57,6 +69,13 @@ Visualiza la distribución de vuelos según el **día de la semana** en el que d
 ¿Qué conclusión extraes?
 
 ### Solución
+
+```{r}
+flights_dt %>% 
+  mutate(wday = wday(dep_time, label = TRUE)) %>% 
+  ggplot(aes(x = wday)) +
+    geom_bar()
+```
 
 
 ## Ejercicio 3
@@ -67,6 +86,14 @@ de la hora prevista para el despegue.
 
 ### Solución
 
+```{r}
+flights_dt %>% 
+  mutate(minute = minute(dep_time), minute_sch = minute(sched_dep_time)) %>% 
+  ggplot(aes(x = minute_sch)) +
+    geom_bar()
+```
+
+
 
 ## Ejercicio 4
 
@@ -76,6 +103,12 @@ Visualiza la covariación entre esta variable y `air_time`.
 ¿Qué observas? ¿Qué está sucediendo?
 
 ### Solución
+
+```{r}
+flights_dt %>% mutate(diff_time = arr_time - dep_time) %>% 
+  ggplot(aes(x=diff_time, air_time)) + geom_point()
+```
+
 
 ## Ejercicio 5
 
@@ -88,6 +121,9 @@ base de datos `airport` y se llama `tzone`.
 
 ### Solución
 
+```{r}
+flights_dt %>% left_join(airports, by=c("dest"="faa")) %>% mutate(diff_time = arr_time - dep_time) %>% ggplot(aes(x=air_time, diff_time, color=tzone)) + geom_point()
+```
 
 ## Ejercicio 6
 
@@ -112,6 +148,25 @@ un valor de 5000 euros. Calcula las ganancias netas obtenidas si hubieses vendid
 esas acciones un año después. (Utiliza los precios de apertura).
 
 ### Solución
+
+```{r}
+prices %>% ggplot(aes(x=date, y=open)) + geom_line() + theme_minimal()
+```
+```{r}
+prices %>% arrange(open) %>% select(date) %>% slice(1)
+
+prices %>% arrange(desc(open) ) %>% select(date) %>% slice(1)
+```
+
+
+```{r}
+buy_date <- dmy("2-3-2020")
+q <- 5000
+p1 <- prices %>% filter(date == buy_date) %>% select(open)
+p2 <- prices %>% filter(date == buy_date + years(1)) %>% select(open)
+
+p2*(q/p1) - q
+```
 
 
 ## Ejercicio 7
@@ -139,6 +194,11 @@ x4 <- "Tan solo tiene 1 año!"
 datos <- c(x1,x2,x3,x4)
 ```
 
+```{r}
+tmp <- str_extract(datos, pattern = "\\d+.año.")
+as.numeric(str_extract(tmp, pattern = "\\d+"))
+```
+
 
 ### Solución
 
@@ -148,4 +208,14 @@ Para mejorar la visualización, recodifica los niveles de esta variable para que
 `Unknown`, `<$15000` y `>$15000`.
 
 ### Solución
+
+```{r}
+gss_cat %>%  mutate(rincome = fct_collapse( rincome,
+  `Unknown` = c("Don't know", "No answer", "Not applicable", "Refused"),
+  `<$15000` = c("$8000 to 9999", "$7000 to 7999", "$10000 - 14999", "$3000 to 3999",
+                "$5000 to 5999", "$1000 to 2999", "$6000 to 6999", "$4000 to 4999"),
+  `>$15000` = c("$20000 - 24999", "$25000 or more")
+)) %>% ggplot(aes(x=rincome)) + geom_bar() + theme_minimal()
+```
+
 

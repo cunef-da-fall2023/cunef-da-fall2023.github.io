@@ -31,7 +31,7 @@ class: center, middle, inverse, title-slide
  
 ## Tema 3 - Data Wrangling
 
-### 3.3 Organización de Datos
+### 3.3 Strings, factores y fechas
 <br>
 <br>
 .pull-left[
@@ -233,25 +233,37 @@ str_view(x, ".a.")
 ---
 ## Strings: expresiones regulares
 
-Empieza por `^` y termina por `$`
+Empieza por `^` 
 
 ```{r}
 x <- c("Cats", "Uñas Chung Lee", "Capital")
 str_view(x, "^C")
-str_view(x, "l$")
 ```
 
 ---
 ## Strings: expresiones regulares
 
-`\d`: cualquie dígito
+Termina por `$`
+
+```{r}
+str_view(x, "l$")
+```
+
+
+---
+## Strings: expresiones regulares
+
+`\d`: cualquier dígito
 `\s`: espacio en blanco
 `[abc]`:  a, b, o c.
 
 ```{r}
 x = c("B12", "Eslava", "Ocho y Medio")
-str_view_all(x, "\\d")
+str_view(x, "\\d")
 ```
+---
+## Strings: expresiones regulares
+
 OJO
 
 ```{r}
@@ -426,7 +438,7 @@ Con `fct_reorder()`. Toma tres argumentos
 
 ---
 ## Factores - Reordenar niveles
-Tres opciones 
+Dos opciones 
 
 ```{r, fig.width = 9, fig.height = 4}
 gss_cat %>%
@@ -449,22 +461,6 @@ gss_cat %>%
     geom_point() + theme_bw()
 ```
 
-
-
----
-## Factores - Reordenar niveles
-Tres opciones 
-
-```{r, fig.width = 9, fig.height = 4}
-relig_summary <- gss_cat %>%
-  group_by(relig) %>%
-  summarise(
-    age = mean(age, na.rm = TRUE),
-    tvhours = mean(tvhours, na.rm = TRUE),
-    n = n()
-  )
-ggplot(relig_summary, aes(tvhours, relig)) + geom_point() + theme_bw()
-```
 
 
 ---
@@ -746,7 +742,9 @@ dyears(1) + dweeks(12) + dhours(15)
 
 ```{r}
 mañana <- today() + ddays(1)
+mañana
 año_pasado <- today() - dyears(1)
+año_pasado
 ```
 
 ---

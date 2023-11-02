@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
  
 ## Tema 3 - Data Wrangling
 
-### 3.3 Organización de Datos
+### 3.3 Strings, factores y fechas
 &lt;br&gt;
 &lt;br&gt;
 .pull-left[
@@ -282,8 +282,8 @@ x &lt;- c("Cats", "Uñas Chung Lee", "Capital")
 str_view(x, "Le")
 ```
 
-<div id="htmlwidget-c5547fb427865d0c20a5" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c5547fb427865d0c20a5">{"x":{"html":"<ul>\n  <li>Cats<\/li>\n  <li>Uñas Chung <span class='match'>Le<\/span>e<\/li>\n  <li>Capital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0bca78ecfc8418215b06" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0bca78ecfc8418215b06">{"x":{"html":"<ul>\n  <li>Cats<\/li>\n  <li>Uñas Chung <span class='match'>Le<\/span>e<\/li>\n  <li>Capital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 **Pregunta**: diferencia entre `str_view` y `str_view_all`
 
@@ -298,12 +298,12 @@ x &lt;- c("Cats", "Uñas Chung Lee", "Capital")
 str_view(x, ".a.")
 ```
 
-<div id="htmlwidget-0c00ccd4bf26131bd48f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0c00ccd4bf26131bd48f">{"x":{"html":"<ul>\n  <li><span class='match'>Cat<\/span>s<\/li>\n  <li>U<span class='match'>ñas<\/span> Chung Lee<\/li>\n  <li><span class='match'>Cap<\/span>ital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0921dc759ecdc911dcbd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0921dc759ecdc911dcbd">{"x":{"html":"<ul>\n  <li><span class='match'>Cat<\/span>s<\/li>\n  <li>U<span class='match'>ñas<\/span> Chung Lee<\/li>\n  <li><span class='match'>Cap<\/span>ital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 ---
 ## Strings: expresiones regulares
 
-Empieza por `^` y termina por `$`
+Empieza por `^` 
 
 
 ```r
@@ -311,31 +311,41 @@ x &lt;- c("Cats", "Uñas Chung Lee", "Capital")
 str_view(x, "^C")
 ```
 
-<div id="htmlwidget-7d3fff868802c2129c9c" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7d3fff868802c2129c9c">{"x":{"html":"<ul>\n  <li><span class='match'>C<\/span>ats<\/li>\n  <li>Uñas Chung Lee<\/li>\n  <li><span class='match'>C<\/span>apital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-27a20451c6c07bdc76a5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-27a20451c6c07bdc76a5">{"x":{"html":"<ul>\n  <li><span class='match'>C<\/span>ats<\/li>\n  <li>Uñas Chung Lee<\/li>\n  <li><span class='match'>C<\/span>apital<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+---
+## Strings: expresiones regulares
+
+Termina por `$`
+
 
 ```r
 str_view(x, "l$")
 ```
 
-<div id="htmlwidget-dd00b53e74deef89d573" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dd00b53e74deef89d573">{"x":{"html":"<ul>\n  <li>Cats<\/li>\n  <li>Uñas Chung Lee<\/li>\n  <li>Capita<span class='match'>l<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3d203267d5b3419f7670" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3d203267d5b3419f7670">{"x":{"html":"<ul>\n  <li>Cats<\/li>\n  <li>Uñas Chung Lee<\/li>\n  <li>Capita<span class='match'>l<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
 
 ---
 ## Strings: expresiones regulares
 
-`\d`: cualquie dígito
+`\d`: cualquier dígito
 `\s`: espacio en blanco
 `[abc]`:  a, b, o c.
 
 
 ```r
 x = c("B12", "Eslava", "Ocho y Medio")
-str_view_all(x, "\\d")
+str_view(x, "\\d")
 ```
 
-<div id="htmlwidget-938b553121deb10980b8" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-938b553121deb10980b8">{"x":{"html":"<ul>\n  <li>B<span class='match'>1<\/span><span class='match'>2<\/span><\/li>\n  <li>Eslava<\/li>\n  <li>Ocho y Medio<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b868c222ea8b129382b5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b868c222ea8b129382b5">{"x":{"html":"<ul>\n  <li>B<span class='match'>1<\/span>2<\/li>\n  <li>Eslava<\/li>\n  <li>Ocho y Medio<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+---
+## Strings: expresiones regulares
+
 OJO
 
 
@@ -356,8 +366,8 @@ x = c("ES12", "Mi cuenta es ES46", "Resido en España (ES)")
 str_view(x, "ES\\d\\d")
 ```
 
-<div id="htmlwidget-135b08980d83af883dde" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-135b08980d83af883dde">{"x":{"html":"<ul>\n  <li><span class='match'>ES12<\/span><\/li>\n  <li>Mi cuenta es <span class='match'>ES46<\/span><\/li>\n  <li>Resido en España (ES)<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-459444179c3f7f7c755f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-459444179c3f7f7c755f">{"x":{"html":"<ul>\n  <li><span class='match'>ES12<\/span><\/li>\n  <li>Mi cuenta es <span class='match'>ES46<\/span><\/li>\n  <li>Resido en España (ES)<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 ---
 ## Strings: expresiones regulares
@@ -608,7 +618,7 @@ Con `fct_reorder()`. Toma tres argumentos
 
 ---
 ## Factores - Reordenar niveles
-Tres opciones 
+Dos opciones 
 
 
 ```r
@@ -619,7 +629,7 @@ gss_cat %&gt;%
     geom_point() + theme_bw()
 ```
 
-![](tema3-3_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+![](tema3-3_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
 
 ---
 ## Factores - Reordenar niveles
@@ -635,27 +645,8 @@ gss_cat %&gt;%
     geom_point() + theme_bw()
 ```
 
-![](tema3-3_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
-
-
-
----
-## Factores - Reordenar niveles
-Tres opciones 
-
-
-```r
-relig_summary &lt;- gss_cat %&gt;%
-  group_by(relig) %&gt;%
-  summarise(
-    age = mean(age, na.rm = TRUE),
-    tvhours = mean(tvhours, na.rm = TRUE),
-    n = n()
-  )
-ggplot(relig_summary, aes(tvhours, relig)) + geom_point() + theme_bw()
-```
-
 ![](tema3-3_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
 
 
 ---
@@ -782,7 +773,7 @@ today()
 ```
 
 ```
-## [1] "2022-11-13"
+## [1] "2023-11-02"
 ```
 
 ```r
@@ -790,7 +781,7 @@ str(today())
 ```
 
 ```
-##  Date[1:1], format: "2022-11-13"
+##  Date[1:1], format: "2023-11-02"
 ```
 
 ```r
@@ -798,7 +789,7 @@ now()
 ```
 
 ```
-## [1] "2022-11-13 20:46:44 CET"
+## [1] "2023-11-02 12:25:33 CET"
 ```
 
 ```r
@@ -806,7 +797,7 @@ str(now())
 ```
 
 ```
-##  POSIXct[1:1], format: "2022-11-13 20:46:44"
+##  POSIXct[1:1], format: "2023-11-02 12:25:33"
 ```
 
 ---
@@ -943,7 +934,7 @@ as_datetime(today())
 ```
 
 ```
-## [1] "2022-11-13 UTC"
+## [1] "2023-11-02 UTC"
 ```
 
 ```r
@@ -951,7 +942,7 @@ as_date(now())
 ```
 
 ```
-## [1] "2022-11-13"
+## [1] "2023-11-02"
 ```
 
 ---
@@ -1140,7 +1131,7 @@ mi_edad
 ```
 
 ```
-## Time difference of 10772 days
+## Time difference of 11126 days
 ```
 
 Este objeto alberga tiempos en segundos, minutos, horas, días, etc. Ambiguo
@@ -1156,7 +1147,7 @@ as.duration(mi_edad)
 ```
 
 ```
-## [1] "930700800s (~29.49 years)"
+## [1] "961286400s (~30.46 years)"
 ```
 
 ---
@@ -1243,7 +1234,20 @@ dyears(1) + dweeks(12) + dhours(15)
 
 ```r
 mañana &lt;- today() + ddays(1)
+mañana
+```
+
+```
+## [1] "2023-11-03"
+```
+
+```r
 año_pasado &lt;- today() - dyears(1)
+año_pasado
+```
+
+```
+## [1] "2022-11-01 18:00:00 UTC"
 ```
 
 ---
