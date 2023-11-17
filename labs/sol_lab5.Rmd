@@ -90,7 +90,6 @@ datascience <- survey %>% left_join(conversion, by="CompensationCurrency")
 ```
 
 
-
 ## Ejercicio 3
 
 Ahora crea una nueva variable llamada `compensationUSD` que convierta el `CompensationAmount` original a USD. Esto se logra multiplicando  `CompensationAmount` por el `exchangeRate`. Guarda el nuevo conjunto de datos usando el nombre `datascience`.
@@ -137,7 +136,7 @@ knitr::include_graphics("img/median_comp.png")
 ```
 
 ```{r}
-ggplot(compensation_summary, aes(x=fct_reorder(Major,medianCompensation), y=medianCompensation)) + geom_bar(stat="identity") + labs(title="Salario mediano de científicos de datos", subtitle="2017 Kaggle Survey", x="Salario (USD)", y="") + coord_flip() + theme_minimal()
+ggplot(compensation_summary, aes(x=fct_reorder(Major, medianCompensation), y=medianCompensation)) + geom_bar(stat="identity") + labs(title="Salario mediano de científicos de datos", subtitle="2017 Kaggle Survey", x="Salario (USD)", y="") + coord_flip() + theme_minimal()
 ```
 
 

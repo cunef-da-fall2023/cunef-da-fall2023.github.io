@@ -77,6 +77,9 @@ download.file(data_url, destfile = "data/ipc.csv")
 ipc <- read_csv("data/ipc.csv")
 ```
 
+
+
+
 ```{r}
 ipc %>% filter(DATE >= "2000-01-01") %>% ggplot(aes(x=DATE, y=MEDCPIM158SFRBCLE)) + geom_line() + theme_minimal()
 ```
