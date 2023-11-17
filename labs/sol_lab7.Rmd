@@ -44,12 +44,24 @@ pares de variables:
 
 ### Solución
 
+```{r}
+ggplot(diamonds, aes(cut, price)) + geom_boxplot()
+ggplot(diamonds, aes(color, price)) + geom_boxplot()
+ggplot(diamonds, aes(clarity, price)) + geom_boxplot()
+```
+Los diamantes de baja calidad son más caros
+
 ## Ejercicio 2
 
 Ajusta un modelo lineal donde la variable predictora sea `carat` (el peso de los diamantes ) y la variable dependiente sea `price`. Obtén el valor de los coeficientes e interprétalos. ¿Qué conclusión extraes?
 
 
 ### Solución
+
+```{r}
+mod_diamond <- lm(price ~ carat, data = diamonds)
+summary(mod_diamond)
+```
 
 ## Ejercicio 3
 
@@ -60,6 +72,16 @@ Extrae conclusiones.
 ### Solución
 
 
+```{r}
+grid <- diamonds %>% 
+  data_grid(carat = seq_range(carat, 20)) %>% 
+  add_predictions(mod_diamond, "price") 
+
+ggplot(diamonds, aes(carat, price)) + 
+  geom_hex(bins = 50) + 
+  geom_line(data = grid, colour = "red", size = 1)
+```
+
 ## Ejercicio 4
 
 Crea un nuevo conjunto de datos llamado `diamonds2` donde elimines todos los
@@ -69,12 +91,25 @@ dos de `carat` y `price`.
 
 ### Solución
 
+```{r}
+diamonds2 <- diamonds %>% 
+  filter(carat <= 2.5) %>% 
+  mutate(lprice = log2(price), lcarat = log2(carat))
+```
+
+
 
 ## Ejercicio 5
 
 Utilizando los datos creados en el ejercicio anterior, ajusta un modelo lineal donde la variable predictora sea `lcarat` y la variable dependiente sea `lprice`. Obtén el valor de los coeficientes e interprétalos. Según este modelo, que le sucede al precio de un diamante si multiplico por dos su `carat`.
 
 ### Solución
+
+```{r}
+mod_diamond <- lm(lprice ~ lcarat, data = diamonds2)
+coefficients(mod_diamond)
+```
+
 
 ## Ejercicio 6
 
@@ -83,6 +118,18 @@ Extrae conclusiones. ¿Se ajusta este modelo mejor que el anterior a los datos?
 
 ### Solución
 
+```{r}
+grid <- diamonds2 %>% 
+  data_grid(carat = seq_range(carat, 20)) %>% 
+  mutate(lcarat = log2(carat)) %>% 
+  add_predictions(mod_diamond, "lprice") %>% 
+  mutate(price = 2 ^ lprice)
+
+ggplot(diamonds2, aes(carat, price)) + 
+  geom_hex(bins = 50) + 
+  geom_line(data = grid, colour = "red", size = 1)
+
+```
 
 ## Ejercicio 7
 
@@ -95,6 +142,21 @@ Utilizando la base de datos `diamonds2`, visualiza la relación entre las siguie
 
 ### Solución
 
+```{r}
+diamonds2 <- diamonds2 %>% 
+  add_residuals(mod_diamond, "lresid")
+
+ggplot(diamonds2, aes(lcarat, lresid)) + 
+  geom_hex(bins = 50)
+```
+
+```{r}
+ggplot(diamonds2, aes(cut, lresid)) + geom_boxplot()
+ggplot(diamonds2, aes(color, lresid)) + geom_boxplot()
+ggplot(diamonds2, aes(clarity, lresid)) + geom_boxplot()
+```
+
+
 
 ## Ejercicio 8
 
@@ -105,6 +167,23 @@ sus predicciones.
 Interpreta los coeficientes de este modelo.
 
 ### Solución
+
+```{r}
+ggplot(sim3, aes(x1, y)) + 
+  geom_point(aes(colour = x2))
+```
+
+```{r}
+mod1 <- lm(y ~ x1 + x2, data = sim3)
+grid <- sim3 %>% 
+  data_grid(x1, x2) %>% 
+  gather_predictions(mod1)
+
+ggplot(sim3, aes(x1, y, colour = x2)) + 
+  geom_point() + 
+  geom_line(data = grid, aes(y = pred)) 
+```
+
 
 
 ## Ejercicio 9
@@ -119,6 +198,17 @@ en R este modelo se corresponde con la fórmula `y ~ x1 * x2`.
 Visualiza las predicciones del modelo, e interpreta sus coeficientes.
 
 ### Solución
+
+```{r}
+mod2 <- lm(y ~ x1 * x2, data = sim3)
+grid <- sim3 %>% 
+  data_grid(x1, x2) %>% 
+  gather_predictions(mod2)
+
+ggplot(sim3, aes(x1, y, colour = x2)) + 
+  geom_point() + 
+  geom_line(data = grid, aes(y = pred)) 
+```
 
 ## Ejercicio 10
 
@@ -151,17 +241,60 @@ El objetivo de este ejercicio es calcular el intervalo de confianza del 95% para
 
 Fija una semilla para controlar el proceso aleatorio.
 
+```{r}
+set.seed(124534)
+```
+
 ### 10.2
 
 Calcula la distribución bootstrap
+
+```{r}
+bss <- gss_email %>%
+  specify(response = email) %>% 
+  generate(reps = 5000, type = "bootstrap")
+```
+
+
+
+```{r glimpse-boot-dist}
+glimpse(bss)
+```
 
 ### 10.3
 
 Calcula y visualiza el IC
 
+```{r calc-ci}
+bss_stat <- bss %>% calculate(stat="mean")
+```
+
+```{r plot-boot-dist-ggplot}
+ci <- bss_stat %>%
+  summarise(lower_b = quantile(stat, 0.025), 
+            upper_b = quantile(stat, 0.975))
+ci
+```
+
+```{r  plot-boot-dist-infer}
+ggplot(data = bss_stat, mapping = aes(x = stat)) +
+  geom_histogram(binwidth = 5, alpha = .5) +
+  geom_vline(xintercept = ci$lower_b,
+             color = "steelblue", lty = 2, size = 1) + 
+  geom_vline(xintercept = ci$upper_b,
+             color = "steelblue", lty = 2, size = 1) +
+  labs(title = "Distribución Bootstrap de la media tiempo gastado en email",
+       subtitle = "con IC de 95%",
+       x = "Medianas", y = "Num") +
+  theme_minimal()
+
+```
+
 ### 10.4 
 
 Interpreta el resultado
+
+
 
 ## Ejercicio 11
 
@@ -192,6 +325,14 @@ añade una variable id que indique el número de fila. Guarda esto en un nuevo d
 
 ### Solución
 
+```{r}
+titanic <- titanic_train %>% select(Survived, Age, Sex, Embarked, SibSp, 
+                                    Parch, Fare, Pclass) %>% 
+  mutate(Survived=as.factor(Survived), Sex=as.factor(Sex), 
+         Embarked=as.factor(Embarked), Pclass = as.factor(Pclass)) %>% 
+  mutate(row_num = row_number())
+
+```
 
 ## Ejercicio 12
 
@@ -203,6 +344,10 @@ titanic del ejercicio anterior. Su número de filas ha de ser el 70% del número
 
 ### Solución
 
+```{r}
+train <- titanic %>% sample_frac(size=0.7)
+test <- titanic %>% anti_join(train, by="row_num")
+```
 
 ## Ejercicio 13
 
@@ -210,6 +355,10 @@ Ajusta un modelo de regresión logística usando los datos `train` donde la vari
 respuesta sea `Survived` y la variable predictora sea `Sex`.
 
 ### Solución
+
+```{r}
+log_reg <- glm( Survived ~ Sex, data = train, family = binomial(link='logit'))
+```
 
 
 ## Ejercicio 14
@@ -221,6 +370,11 @@ Calcula las predicciones del modelo anterior sobre los datos `test`. Necesitará
 Finalmente, calcula el procentaje de aciertos comparando la variable recién creada y la variable Survived.
 
 ### Solución
+
+```{r}
+test %>% add_predictions(log_reg, type = "response") %>% mutate(Survived_pred = ifelse(pred > 0.5, 1, 0)) %>% 
+  summarise(mean(Survived == Survived_pred))
+```
 
 
 ## Ejercicio 15
