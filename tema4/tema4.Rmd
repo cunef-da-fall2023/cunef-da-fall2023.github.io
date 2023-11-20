@@ -926,7 +926,7 @@ class: center, middle, inverse
 * En lo que resta de curso, introduciremos herramientas básicas de modelización, poniendo
 el foco en su uso como **técnicas de exploración** de datos.
 
-* **No** vamos a estudiar cómo usar estas herramientas para generalizar resultados a poblaciones, ni para determinar causalidad.
+* **No** vamos a estudiar cómo usar estas herramientas para determinar causalidad.
 
 * No hay nada malo con la exploración, pero nunca debes vender un análisis exploratorio como un análisis confirmatorio porque es **engañoso**.
 
@@ -1068,7 +1068,11 @@ reg_mod <- lm(mpg ~ wt, data = mtcars)
 coef(reg_mod)
 ```
 
-* El objeto `mpg ~ wt` es una fórmula. Equivale a $\text{mpg} = \beta_0 + \beta_1 \cdot \text{wt} $
+* El objeto `mpg ~ wt` es una fórmula. Equivale a 
+
+$$
+\text{mpg} = \beta_0 + \beta_1 \cdot \text{wt}
+$$
 
 * Intercept es la estimación del coeficiente $\beta_0$ y el otro número es la estimación de $\beta_1$
 
