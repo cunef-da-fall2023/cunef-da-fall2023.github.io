@@ -120,50 +120,8 @@ Visualiza las predicciones del modelo, e interpreta sus coeficientes.
 
 ### Solución
 
+
 ## Ejercicio 10
-
-Para este ejercicio necesitas cargar la librería `infer`
-
-```{r load-packages, warning = FALSE, message = FALSE}
-library(infer)
-```
-
-### Datos 
-
-
-La Encuesta Social General (GSS) recopila datos sobre la sociedad estadounidense contemporánea con el fin de comprender y explicar las tendencias y constantes en actitudes, comportamientos y atributos. Se han monitorizado cientos de tendencias desde 1972. 
-
-La GSS contiene un núcleo estándar de preguntas demográficas, de comportamiento y sobre actitudes, además de temas de interés especial. Entre los temas tratados se encuentran las libertades civiles, el crimen y la violencia, la tolerancia entre grupos, la moralidad, las prioridades nacionales de gasto, el bienestar psicológico, la movilidad social y el estrés y los eventos traumáticos.
-
-Analizaremos datos de la GSS de 2018 para entender cuánto tiempo pasan los adultos estadounidenses en el correo electrónico.
-
-```{r load-data, message = FALSE}
-gss_email <- read_csv("data/gss_email_2018.csv")
-```
-
-
-Utilizaremos la variable `email`: el número de minutos que los encuestados pasan en el correo electrónico semanalmente. 
-
-El objetivo de este ejercicio es calcular el intervalo de confianza del 95% para el tiempo medio que los americanos gastan en el correo.
-
-
-### 10.1
-
-Fija una semilla para controlar el proceso aleatorio.
-
-### 10.2
-
-Calcula la distribución bootstrap
-
-### 10.3
-
-Calcula y visualiza el IC
-
-### 10.4 
-
-Interpreta el resultado
-
-## Ejercicio 11
 
 Hasta ahora hemos trabajado únicamente con modelos en los que la variable respuesta es cuantitativa.
 Existen modelos análogos que se pueden utilizar para casos en los que la variable respuesta es cualitativa. Uno de estos modelos es la regresión logística.
@@ -193,7 +151,7 @@ añade una variable id que indique el número de fila. Guarda esto en un nuevo d
 ### Solución
 
 
-## Ejercicio 12
+## Ejercicio 11
 
 Crea dos conjuntos de datos llamados `train` y `test`.
 El primero, debe contener observaciones (filas) seleccionadas al azar del dataframe
@@ -204,7 +162,7 @@ titanic del ejercicio anterior. Su número de filas ha de ser el 70% del número
 ### Solución
 
 
-## Ejercicio 13
+## Ejercicio 12
 
 Ajusta un modelo de regresión logística usando los datos `train` donde la variable
 respuesta sea `Survived` y la variable predictora sea `Sex`.
@@ -212,7 +170,7 @@ respuesta sea `Survived` y la variable predictora sea `Sex`.
 ### Solución
 
 
-## Ejercicio 14
+## Ejercicio 13
 
 La predicción de una regresión logística es una probabilidad correspondiente a la probabilidad de que la variable respuesta tome valor 1 (en nuestro caso que el pasajero correspondiente sobreviva) según el modelo.
 
@@ -223,9 +181,54 @@ Finalmente, calcula el procentaje de aciertos comparando la variable recién cre
 ### Solución
 
 
-## Ejercicio 15
+## Ejercicio 14
 
 Intenta mejorar el model anterior añadiendo más variables. ¿Qué variable crees que tiene más poder predictivo?
 
 ### Solución
+
+
+## Ejercicio 15
+
+Para este ejercicio necesitas cargar la librería `infer`
+
+```{r load-packages, warning = FALSE, message = FALSE}
+library(infer)
+```
+
+### Datos 
+
+
+La Encuesta Social General (GSS) recopila datos sobre la sociedad estadounidense contemporánea con el fin de comprender y explicar las tendencias y constantes en actitudes, comportamientos y atributos. Se han monitorizado cientos de tendencias desde 1972. 
+
+La GSS contiene un núcleo estándar de preguntas demográficas, de comportamiento y sobre actitudes, además de temas de interés especial. Entre los temas tratados se encuentran las libertades civiles, el crimen y la violencia, la tolerancia entre grupos, la moralidad, las prioridades nacionales de gasto, el bienestar psicológico, la movilidad social y el estrés y los eventos traumáticos.
+
+Analizaremos datos de la GSS de 2018 para entender cuánto tiempo pasan los adultos estadounidenses en el correo electrónico.
+
+```{r load-data, message = FALSE}
+gss_email <- read_csv("data/gss_email_2018.csv")
+```
+
+
+Utilizaremos la variable `email`: el número de minutos que los encuestados pasan en el correo electrónico semanalmente. 
+
+El objetivo de este ejercicio es calcular el intervalo de confianza del 95% para el tiempo medio que los americanos gastan en el correo.
+
+
+### 15.1
+
+Fija una semilla para controlar el proceso aleatorio.
+
+### 15.2
+
+Calcula la distribución bootstrap
+
+### 15.3
+
+Calcula y visualiza el IC
+
+### 15.4 
+
+Interpreta el resultado
+
 

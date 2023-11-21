@@ -1754,48 +1754,6 @@ interpreta sus coeficientes.</p>
 </div>
 <div id="ejercicio-10" class="section level2">
 <h2>Ejercicio 10</h2>
-<p>Para este ejercicio necesitas cargar la librería
-<code>infer</code></p>
-<pre class="r"><code>library(infer)</code></pre>
-<div id="datos" class="section level3">
-<h3>Datos</h3>
-<p>La Encuesta Social General (GSS) recopila datos sobre la sociedad
-estadounidense contemporánea con el fin de comprender y explicar las
-tendencias y constantes en actitudes, comportamientos y atributos. Se
-han monitorizado cientos de tendencias desde 1972.</p>
-<p>La GSS contiene un núcleo estándar de preguntas demográficas, de
-comportamiento y sobre actitudes, además de temas de interés especial.
-Entre los temas tratados se encuentran las libertades civiles, el crimen
-y la violencia, la tolerancia entre grupos, la moralidad, las
-prioridades nacionales de gasto, el bienestar psicológico, la movilidad
-social y el estrés y los eventos traumáticos.</p>
-<p>Analizaremos datos de la GSS de 2018 para entender cuánto tiempo
-pasan los adultos estadounidenses en el correo electrónico.</p>
-<pre class="r"><code>gss_email &lt;- read_csv(&quot;data/gss_email_2018.csv&quot;)</code></pre>
-<p>Utilizaremos la variable <code>email</code>: el número de minutos que
-los encuestados pasan en el correo electrónico semanalmente.</p>
-<p>El objetivo de este ejercicio es calcular el intervalo de confianza
-del 95% para el tiempo medio que los americanos gastan en el correo.</p>
-</div>
-<div id="section" class="section level3">
-<h3>10.1</h3>
-<p>Fija una semilla para controlar el proceso aleatorio.</p>
-</div>
-<div id="section-1" class="section level3">
-<h3>10.2</h3>
-<p>Calcula la distribución bootstrap</p>
-</div>
-<div id="section-2" class="section level3">
-<h3>10.3</h3>
-<p>Calcula y visualiza el IC</p>
-</div>
-<div id="section-3" class="section level3">
-<h3>10.4</h3>
-<p>Interpreta el resultado</p>
-</div>
-</div>
-<div id="ejercicio-11" class="section level2">
-<h2>Ejercicio 11</h2>
 <p>Hasta ahora hemos trabajado únicamente con modelos en los que la
 variable respuesta es cuantitativa. Existen modelos análogos que se
 pueden utilizar para casos en los que la variable respuesta es
@@ -1825,8 +1783,8 @@ significa cada variable.</p>
 <h3>Solución</h3>
 </div>
 </div>
-<div id="ejercicio-12" class="section level2">
-<h2>Ejercicio 12</h2>
+<div id="ejercicio-11" class="section level2">
+<h2>Ejercicio 11</h2>
 <p>Crea dos conjuntos de datos llamados <code>train</code> y
 <code>test</code>. El primero, debe contener observaciones (filas)
 seleccionadas al azar del dataframe titanic del ejercicio anterior. Su
@@ -1839,8 +1797,8 @@ están en el conjunto de datos titanic pero que no están en
 <h3>Solución</h3>
 </div>
 </div>
-<div id="ejercicio-13" class="section level2">
-<h2>Ejercicio 13</h2>
+<div id="ejercicio-12" class="section level2">
+<h2>Ejercicio 12</h2>
 <p>Ajusta un modelo de regresión logística usando los datos
 <code>train</code> donde la variable respuesta sea <code>Survived</code>
 y la variable predictora sea <code>Sex</code>.</p>
@@ -1848,8 +1806,8 @@ y la variable predictora sea <code>Sex</code>.</p>
 <h3>Solución</h3>
 </div>
 </div>
-<div id="ejercicio-14" class="section level2">
-<h2>Ejercicio 14</h2>
+<div id="ejercicio-13" class="section level2">
+<h2>Ejercicio 13</h2>
 <p>La predicción de una regresión logística es una probabilidad
 correspondiente a la probabilidad de que la variable respuesta tome
 valor 1 (en nuestro caso que el pasajero correspondiente sobreviva)
@@ -1865,12 +1823,54 @@ recién creada y la variable Survived.</p>
 <h3>Solución</h3>
 </div>
 </div>
-<div id="ejercicio-15" class="section level2">
-<h2>Ejercicio 15</h2>
+<div id="ejercicio-14" class="section level2">
+<h2>Ejercicio 14</h2>
 <p>Intenta mejorar el model anterior añadiendo más variables. ¿Qué
 variable crees que tiene más poder predictivo?</p>
 <div id="solución-13" class="section level3">
 <h3>Solución</h3>
+</div>
+</div>
+<div id="ejercicio-15" class="section level2">
+<h2>Ejercicio 15</h2>
+<p>Para este ejercicio necesitas cargar la librería
+<code>infer</code></p>
+<pre class="r"><code>library(infer)</code></pre>
+<div id="datos" class="section level3">
+<h3>Datos</h3>
+<p>La Encuesta Social General (GSS) recopila datos sobre la sociedad
+estadounidense contemporánea con el fin de comprender y explicar las
+tendencias y constantes en actitudes, comportamientos y atributos. Se
+han monitorizado cientos de tendencias desde 1972.</p>
+<p>La GSS contiene un núcleo estándar de preguntas demográficas, de
+comportamiento y sobre actitudes, además de temas de interés especial.
+Entre los temas tratados se encuentran las libertades civiles, el crimen
+y la violencia, la tolerancia entre grupos, la moralidad, las
+prioridades nacionales de gasto, el bienestar psicológico, la movilidad
+social y el estrés y los eventos traumáticos.</p>
+<p>Analizaremos datos de la GSS de 2018 para entender cuánto tiempo
+pasan los adultos estadounidenses en el correo electrónico.</p>
+<pre class="r"><code>gss_email &lt;- read_csv(&quot;data/gss_email_2018.csv&quot;)</code></pre>
+<p>Utilizaremos la variable <code>email</code>: el número de minutos que
+los encuestados pasan en el correo electrónico semanalmente.</p>
+<p>El objetivo de este ejercicio es calcular el intervalo de confianza
+del 95% para el tiempo medio que los americanos gastan en el correo.</p>
+</div>
+<div id="section" class="section level3">
+<h3>15.1</h3>
+<p>Fija una semilla para controlar el proceso aleatorio.</p>
+</div>
+<div id="section-1" class="section level3">
+<h3>15.2</h3>
+<p>Calcula la distribución bootstrap</p>
+</div>
+<div id="section-2" class="section level3">
+<h3>15.3</h3>
+<p>Calcula y visualiza el IC</p>
+</div>
+<div id="section-3" class="section level3">
+<h3>15.4</h3>
+<p>Interpreta el resultado</p>
 </div>
 </div>
 
